@@ -32,6 +32,13 @@ function Store() {
       <h1>Store</h1>
       <Field label="Find Pet by ID" type="search" />
       Available: {pets.available} • Pending: {pets.pending} • Sold: {pets.sold}
+      <div className="flex justify-between items-center">
+        <h2>Pets</h2>
+        <Link to="/store/add-pet" className="mt3">
+          + Add Pet
+        </Link>
+      </div>
+      <div className="card">Pets filtered by various attributes...</div>
     </AuthenticatedPage>
   );
 }
@@ -68,6 +75,7 @@ function Users() {
       <div className="card">
         <ul>
           <li>Add List of Users</li>
+          <li>Delete User</li>
         </ul>
       </div>
     </AuthenticatedPage>
@@ -142,18 +150,6 @@ function Sidebar() {
           <Link className="nav-link" to="/store">
             Store
           </Link>
-          <ul>
-            <li>
-              <Link className="nav-link" to="/store/add-pet">
-                Add Pet
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-link" to="/store/order-pet">
-                Order Pet
-              </Link>
-            </li>
-          </ul>
         </li>
         <li>
           <Link className="nav-link" to="/users">
