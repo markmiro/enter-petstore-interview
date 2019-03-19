@@ -4,11 +4,14 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Pet Store</h1>
-      <Router>
-        <div>
-          <ul className="App__nav">
+    <Router>
+      <div className="App">
+        <div className="App__header">
+          <h1 className="f5 mv0 b">Pet Store</h1>
+          <div className="App__header__avatar">SM</div>
+        </div>
+        <div className="nested-list-reset">
+          <ul>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -38,9 +41,9 @@ function App() {
               </ul>
             </li>
           </ul>
+        </div>
 
-          <hr />
-
+        <div className="App__body">
           <Route exact path="/" component={Home} />
           <Route path="/store" component={Store} />
           <Route path="/store/add-pet" component={CreatePet} />
@@ -48,8 +51,8 @@ function App() {
           <Route path="/users/create" component={CreateUser} />
           <Route path="/users/login" component={LoginUser} />
         </div>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 
@@ -148,17 +151,12 @@ function LoginUser() {
 /*
   Acts as an input except:
   - We have a label
-  - Textarea is treated like a field of type "textarea"
 */
 function Field({ label, className, type, ...rest }) {
   return (
     <>
       <label className="db mb1">{label}</label>
-      {type === "textarea" ? (
-        <textarea {...rest} />
-      ) : (
-        <input className={`db mb2 ${className}`} type={type} {...rest} />
-      )}
+      <input className={`db mb3 ${className}`} type={type} {...rest} />
     </>
   );
 }

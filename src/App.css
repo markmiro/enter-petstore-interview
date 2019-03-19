@@ -1,11 +1,26 @@
-.App {
+.App__header {
+  height: 80px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 112px;
+}
+
+.App__header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px; /* circle */
+  background: rgba(46, 91, 255, 0.15);
+  color: rgb(46, 91, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.App__body {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 10px;
-}
-
-.App__nav {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
 }
