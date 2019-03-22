@@ -2,6 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./App.css";
 
+function randomId() {
+  return Math.random()
+    .toString()
+    .slice(2);
+}
+
 function App() {
   return (
     <Router>
@@ -44,8 +50,8 @@ function Store() {
         </Link>
       </div>
       <div className="card">
-        {pets.map(pet => (
-          <div>
+        {pets.map((pet, i) => (
+          <div key={i}>
             {pet.name} - {pet.id}
           </div>
         ))}
@@ -55,15 +61,48 @@ function Store() {
 }
 
 function CreatePet() {
+  const [name, setName] = React.useState("Doggie");
+  const [status, setStatus] = React.useState("available");
+  const [category, setCategory] = React.useState("some category");
+  const [tags, setTags] = React.useState("some tag");
+  const [image, setImage] = React.useState("");
+
   return (
     <AuthenticatedPage>
       <h1>Add Pet</h1>
-      <form className="card">
-        <Field label="Name" />
-        <Field label="Status" />
-        <Field label="Category" />
-        <Field label="Tags" />
-        <Field label="Upload Image" type="file" />
+      <form
+        className="card"
+        onSubmit={e => {
+          e.preventDefault();
+          fetch("https://petstore.swagger.io/v2/pet", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              id: randomId(),
+              category: {
+                id: randomId(),
+                name: category
+              },
+              name,
+              photoUrls: [image],
+              tags: [
+                {
+                  id: randomId(),
+                  name: tags
+                }
+              ],
+              status
+            })
+          }).catch(err => alert("Something went wrong"));
+        }}
+      >
+        <Field label="Name" value={name} onChange={setName} />
+        <Field label="Status" value={status} onChange={setStatus} />
+        <Field label="Category" value={category} onChange={setCategory} />
+        <Field label="Tags" value={tags} onChange={setTags} />
+        <Field label="Image URL" value={image} onChange={setImage} />
         <button type="submit">Add Pet</button>
       </form>
     </AuthenticatedPage>
@@ -155,7 +194,7 @@ function AuthenticatedPage({ children }) {
 
 function Sidebar() {
   return (
-    <div className="nested-list-reset">
+    <div className="nav nested-list-reset">
       <ul>
         <li>
           <Link className="nav-link" to="/store">
@@ -193,11 +232,16 @@ function Header() {
   Acts as an input except:
   - We have a label
 */
-function Field({ label, className, type, ...rest }) {
+function Field({ label, className, type, onChange, ...rest }) {
   return (
     <>
       <label className="db mb1">{label}</label>
-      <input className={`db mb3 ${className}`} type={type} {...rest} />
+      <input
+        className={`db mb3 ${className}`}
+        type={type}
+        onChange={e => onChange(e.target.value)}
+        {...rest}
+      />
     </>
   );
 }

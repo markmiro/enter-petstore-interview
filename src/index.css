@@ -65,6 +65,12 @@ small {
   box-shadow: 0 10px 20px #2e5bff24;
 }
 
+@media screen and (max-width: 500px) {
+  .nav {
+    display: none;
+  }
+}
+
 .nav-link {
   display: block;
   padding: 18px 16px;
