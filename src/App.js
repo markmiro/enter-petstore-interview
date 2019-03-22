@@ -25,7 +25,7 @@ function Store() {
     fetch("https://petstore.swagger.io/v2/store/inventory")
       .then(r => r.json())
       .then(setPets);
-  });
+  }, []);
 
   return (
     <AuthenticatedPage>
