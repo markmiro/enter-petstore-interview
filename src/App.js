@@ -19,10 +19,14 @@ function App() {
 }
 
 function Store() {
+  const [petStats, setPetStats] = React.useState([]);
   const [pets, setPets] = React.useState([]);
 
   React.useEffect(() => {
     fetch("https://petstore.swagger.io/v2/store/inventory")
+      .then(r => r.json())
+      .then(setPetStats);
+    fetch("https://petstore.swagger.io/v2/pet/findByStatus?status=available")
       .then(r => r.json())
       .then(setPets);
   }, []);
@@ -31,14 +35,21 @@ function Store() {
     <AuthenticatedPage>
       <h1>Store</h1>
       <Field label="Find Pet by ID" type="search" />
-      Available: {pets.available} • Pending: {pets.pending} • Sold: {pets.sold}
+      Available: {petStats.available} • Pending: {petStats.pending} • Sold:{" "}
+      {petStats.sold}
       <div className="flex justify-between items-center">
         <h2>Pets</h2>
         <Link to="/store/add-pet" className="mt3">
           + Add Pet
         </Link>
       </div>
-      <div className="card">Pets filtered by various attributes...</div>
+      <div className="card">
+        {pets.map(pet => (
+          <div>
+            {pet.name} - {pet.id}
+          </div>
+        ))}
+      </div>
     </AuthenticatedPage>
   );
 }
